@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Janda.IO
 {
-    public sealed class DirectoryTreeInfo
+    public class DirectoryTreeInfo
     {
         private readonly int _rootLength = 0;
 

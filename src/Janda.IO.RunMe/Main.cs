@@ -19,6 +19,19 @@ namespace Janda.IO.RunMe
         }
 
 
+        private void LogTreeFolder(DirectoryTreeFolder info)
+        {
+
+            _logger.LogInformation("[{id}]  [{parent}]  [{level}]\t[{item}]", info.Id, info.Parent, info.DirectoryLevel, info.RelativeName);
+
+            foreach (var file in info.Files)
+                _logger.LogInformation(" {id}    {parent}    {level} \t {item} ", file.Id, file.Parent, file.DirectoryLevel, file.RelativeName);
+
+            _logger.LogInformation("-----------------------------------------------------------------------------------------");
+
+        }
+
+
         private void LogTreeException(Exception exception)
         {
             _logger.LogError(exception, "DirectoryTree error.");
@@ -43,8 +56,12 @@ namespace Janda.IO.RunMe
             var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
 
-            TreeEnumerate(path);
-            TreeCallbacks(path);                         
+            foreach (var folder in DirectoryTree.TraverseFolders(@"C:\TEMP\DUPA", LogTreeException))
+                LogTreeFolder(folder);
+            
+
+            //TreeEnumerate(path);
+            //TreeCallbacks(path);                         
         }
     }
 }
