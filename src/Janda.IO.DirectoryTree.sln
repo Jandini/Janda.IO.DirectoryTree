@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Janda.IO.DirectoryTree", "Janda.IO.DirectoryTree\Janda.IO.DirectoryTree.csproj", "{FD237AF5-6A22-480D-8B74-C23E0A62AE61}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Janda.IO.RunMe", "Janda.IO.RunMe\Janda.IO.RunMe.csproj", "{A3EF31E2-3788-484D-8B46-3599F8929CBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FD237AF5-6A22-480D-8B74-C23E0A62AE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD237AF5-6A22-480D-8B74-C23E0A62AE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD237AF5-6A22-480D-8B74-C23E0A62AE61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3EF31E2-3788-484D-8B46-3599F8929CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3EF31E2-3788-484D-8B46-3599F8929CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3EF31E2-3788-484D-8B46-3599F8929CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3EF31E2-3788-484D-8B46-3599F8929CBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
