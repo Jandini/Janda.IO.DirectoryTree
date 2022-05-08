@@ -1,19 +1,18 @@
 ﻿using System.IO;
+using System.Linq;
 
 namespace Janda.IO
 {
-    public class DirectoryTreeFolder : DirectoryTreeInfo
+    public sealed class DirectoryTreeFolder
     {
-        public DirectoryTreeInfo[] Files { get; private set; }
-        public DirectoryTreeFolder(string path) : base(path)
-        {
+        public DirectoryTreeInfo[] Files { get; internal set; }
+        public DirectoryTreeInfo Info { get; internal set; }
 
-        }
 
-        public DirectoryTreeFolder(FileSystemInfo fsInfo, DirectoryTreeInfo dtInfo, string path, DirectoryTreeInfo[] files)
-            : base(fsInfo, dtInfo, path, 0)
+        public DirectoryTreeFolder(DirectoryTreeInfo dtInfo, FileSystemInfo[] fsItems, string path)
         {
-            Files = files;
+            Info = dtInfo;
+            Files = fsItems.OfType<FileInfo>().Select(a => new DirectoryTreeInfo(a, dtInfo, path, a.Length)).ToArray();
         }
     }
 }

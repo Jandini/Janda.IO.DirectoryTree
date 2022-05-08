@@ -22,19 +22,21 @@ namespace Janda.IO.RunMe
         private void LogTreeFolder(DirectoryTreeFolder info)
         {
 
-            _logger.LogInformation("[{id}]  [{parent}]  [{level}]\t[{item}]", info.Id, info.Parent, info.DirectoryLevel, info.RelativeName);
+            //_logger.LogInformation("[{id}]  [{parent}]  [{level}]  [{count}]\t[{item}]", info.Info.Id, info.Info.Parent, info.Info.DirectoryLevel, info.Files.Length, info.Info.Name);
 
-            foreach (var file in info.Files)
-                _logger.LogInformation(" {id}    {parent}    {level} \t {item} ", file.Id, file.Parent, file.DirectoryLevel, file.RelativeName);
 
-            _logger.LogInformation("-----------------------------------------------------------------------------------------");
+            //_logger.LogInformation("[{id}]  [{parent}]  [{level}]\t[{item}]", info.Info.Id, info.Info.Parent, info.Info.DirectoryLevel, info.Info.RelativeName);
+            //foreach (var file in info.Files)
+            //    _logger.LogInformation(" {id}    {parent}    {level} \t {item} ", file.Id, file.Parent, file.DirectoryLevel, file.RelativeName);
+
+            //_logger.LogInformation("-----------------------------------------------------------------------------------------");
 
         }
 
 
         private void LogTreeException(Exception exception)
         {
-            _logger.LogError(exception, "DirectoryTree error.");
+            _logger.LogError(exception.Message);
         }
 
 
@@ -55,10 +57,12 @@ namespace Janda.IO.RunMe
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
+            //path = @"C:\TEMP\DUPA";
 
-            foreach (var folder in DirectoryTree.TraverseFolders(@"C:\TEMP\DUPA", LogTreeException))
+            foreach (var folder in DirectoryTree.TraverseFolders(path, LogTreeException))
                 LogTreeFolder(folder);
-            
+
+            _logger.LogInformation("Directory Tree Enumerator");
 
             //TreeEnumerate(path);
             //TreeCallbacks(path);                         

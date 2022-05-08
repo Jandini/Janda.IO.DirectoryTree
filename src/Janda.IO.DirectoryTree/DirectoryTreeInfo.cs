@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Janda.IO
 {
-    public class DirectoryTreeInfo
+    public sealed class DirectoryTreeInfo
     {
         private readonly int _rootLength = 0;
 
@@ -24,7 +24,6 @@ namespace Janda.IO
 
         public DirectoryTreeInfo(string path)
         {
-            Id = Guid.Empty;
             DirectoryLevel = -1;
             _rootLength = path.Length;
         }
@@ -34,6 +33,20 @@ namespace Janda.IO
             Id = id;
             DirectoryLevel = -1;
             _rootLength = path.Length;
+        }
+
+        public DirectoryTreeInfo(DirectoryInfo info)
+        {
+            Id = Guid.NewGuid();
+            DirectoryName = info.FullName;
+            _rootLength = info.FullName.Length;
+
+            DirectoryLevel = -1;
+            Name = info.Name;
+            Attributes = info.Attributes;
+            LastAccessTimeUtc = info.LastAccessTimeUtc;
+            CreationTimeUtc = info.CreationTimeUtc;
+            LastWriteTimeUtc = info.LastWriteTimeUtc;
         }
 
         public DirectoryTreeInfo(FileSystemInfo fsInfo, DirectoryTreeInfo dtInfo, string path, long size)
