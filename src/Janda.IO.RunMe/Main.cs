@@ -19,15 +19,16 @@ namespace Janda.IO.RunMe
         }
 
 
-        private void LogTreeFolder(DirectoryTreeFolder info)
+        private void LogTreeFolder(DirectoryTreeFolder folder)
         {
+            return;
 
-            //_logger.LogInformation("[{id}]  [{parent}]  [{level}]  [{count}]\t[{item}]", info.Info.Id, info.Info.Parent, info.Info.DirectoryLevel, info.Files.Length, info.Info.Name);
+            _logger.LogInformation("[{id}]  [{parent}]  [{level}]  [{count}]\t[{item}]", folder.Info.Id, folder.Info.Parent, folder.Info.DirectoryLevel, folder.Files.Length, folder.Info.Name);
 
 
             //_logger.LogInformation("[{id}]  [{parent}]  [{level}]\t[{item}]", info.Info.Id, info.Info.Parent, info.Info.DirectoryLevel, info.Info.RelativeName);
-            //foreach (var file in info.Files)
-            //    _logger.LogInformation(" {id}    {parent}    {level} \t {item} ", file.Id, file.Parent, file.DirectoryLevel, file.RelativeName);
+            foreach (var file in folder.Files)
+                _logger.LogInformation(" {id}    {parent}    {level} \t {item} ", file.Id, file.Parent, file.DirectoryLevel, file.Name);
 
             //_logger.LogInformation("-----------------------------------------------------------------------------------------");
 
@@ -57,7 +58,7 @@ namespace Janda.IO.RunMe
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-            //path = @"C:\TEMP\DUPA";
+            //path = @"E:\!!! MATT's IPHONE 2022-05-16";
 
             foreach (var folder in DirectoryTree.TraverseFolders(path, LogTreeException))
                 LogTreeFolder(folder);

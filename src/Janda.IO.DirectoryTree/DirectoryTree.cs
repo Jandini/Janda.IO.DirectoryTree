@@ -11,14 +11,14 @@ namespace Janda.IO
         {
             try
             {
-                foreach (var treeItem in new DirectoryInfo(path).GetFileSystemInfos())
+                foreach (var fsItems in new DirectoryInfo(path).GetFileSystemInfos())
                 {
-                    switch (treeItem)
+                    switch (fsItems)
                     {
                         case DirectoryInfo dirInfo:
                             var treeDir = new DirectoryTreeInfo(dirInfo, dtInfo, path, 0);
                             dir?.Invoke(treeDir);
-                            Traverse(treeDir, Path.Combine(path, treeItem.Name), dir, file, exception);
+                            Traverse(treeDir, Path.Combine(path, fsItems.Name), dir, file, exception);
                             break;
 
                         case FileInfo fileInfo:
@@ -43,22 +43,22 @@ namespace Janda.IO
         internal static IEnumerable<DirectoryTreeInfo> Traverse(DirectoryTreeInfo dtInfo, string path, Action<Exception> exception)
         {
 
-            FileSystemInfo[] treeItems = null;
+            FileSystemInfo[] fsItems = null;
 
             try
             {
-                treeItems = new DirectoryInfo(path).GetFileSystemInfos();
+                fsItems = new DirectoryInfo(path).GetFileSystemInfos();
             }
             catch (Exception ex)
             {
                 exception?.Invoke(ex);
             }
 
-            if (treeItems is not null)
+            if (fsItems is not null)
             {
-                foreach (var treeItem in treeItems)
+                foreach (var fsItem in fsItems)
                 {
-                    switch (treeItem)
+                    switch (fsItem)
                     {
                         case DirectoryInfo dirInfo:
                             var treeDir = new DirectoryTreeInfo(dirInfo, dtInfo, path, 0);
@@ -81,7 +81,7 @@ namespace Janda.IO
         }
 
 
-      
+
 
 
 
@@ -126,7 +126,8 @@ namespace Janda.IO
         private static string AddPathSeparator(string path) => !path.EndsWith(Path.DirectorySeparatorChar) ? path += Path.DirectorySeparatorChar : path;
         private static DirectoryTreeInfo GetFirstTreeInfo(string path) => new(AddPathSeparator(path));
         private static DirectoryTreeInfo GetFirstTreeInfo(string path, Guid parent) => new(AddPathSeparator(path), parent);
-        
+        private static DirectoryTreeInfo GetFirstFolderTreeInfo(string path) => new(new DirectoryInfo(AddPathSeparator(path)));
+
 
 
 
@@ -134,13 +135,13 @@ namespace Janda.IO
         public static void Traverse(string path, Guid parent, Action<DirectoryTreeInfo> dir, Action<DirectoryTreeInfo> file, Action<Exception> exception) => Traverse(GetFirstTreeInfo(path, parent), AddPathSeparator(path), dir, file, exception);
 
 
-        public static IEnumerable<DirectoryTreeInfo> Traverse(string path, Action<Exception> exception) => Traverse(GetFirstTreeInfo(path), AddPathSeparator(path), exception);
-        public static IEnumerable<DirectoryTreeInfo> Traverse(string path, Guid parent, Action<Exception> exception) => Traverse(GetFirstTreeInfo(path, parent), AddPathSeparator(path), exception);
         public static IEnumerable<DirectoryTreeInfo> Traverse(string path) => Traverse(GetFirstTreeInfo(path), AddPathSeparator(path), null);
+        public static IEnumerable<DirectoryTreeInfo> Traverse(string path, Action<Exception> exception) => Traverse(GetFirstTreeInfo(path), AddPathSeparator(path), exception);
         public static IEnumerable<DirectoryTreeInfo> Traverse(string path, Guid parent) => Traverse(GetFirstTreeInfo(path, parent), AddPathSeparator(path), null);
-        
-        public static IEnumerable<DirectoryTreeFolder> TraverseFolders(string path, Action<Exception> exception) => TraverseFolders(new DirectoryTreeInfo(new DirectoryInfo(AddPathSeparator(path))), AddPathSeparator(path), exception);
-        public static IEnumerable<DirectoryTreeFolder> TraverseFolders(string path) => TraverseFolders(new DirectoryTreeInfo(new DirectoryInfo(AddPathSeparator(path))), AddPathSeparator(path));
+        public static IEnumerable<DirectoryTreeInfo> Traverse(string path, Guid parent, Action<Exception> exception) => Traverse(GetFirstTreeInfo(path, parent), AddPathSeparator(path), exception);
 
+
+        public static IEnumerable<DirectoryTreeFolder> TraverseFolders(string path, Action<Exception> exception) => TraverseFolders(GetFirstFolderTreeInfo(path), AddPathSeparator(path), exception);
+        public static IEnumerable<DirectoryTreeFolder> TraverseFolders(string path) => TraverseFolders(GetFirstFolderTreeInfo(path), AddPathSeparator(path));
     }
 }
